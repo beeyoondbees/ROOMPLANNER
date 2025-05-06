@@ -5802,40 +5802,74 @@
                         }, l
                     }
                     return Object(g.a)(a, [{
-                        key: "render",
-                        value: function() {
-                            var e = this.getButtons();
-                            return Object(v.jsxs)("div", {
-                                className: "left-toolbar",
-                                children: [e.map((function(e, t) {
-                                    return e ? Object(v.jsx)("div", {
-                                        className: "left-toolbar-button ".concat(e.toggled ? "toggled" : ""),
-                                        "data-tip": e.tooltip,
-                                        onClick: function() {
-                                            "function" === typeof e.callback && e.callback()
-                                        },
-                                        children: Object(v.jsx)("span", {
-                                            className: e.font,
-                                            style: e.fontStyle,
-                                            children: e.label
-                                        })
-                                    }, t) : Object(v.jsx)("div", {
-                                        className: "hr"
-                                    }, t)
-                                })), Object(v.jsx)(Ft.a, {
-                                    position: "bottom-center",
-                                    autoClose: 3e3,
-                                    hideProgressBar: !1,
-                                    newestOnTop: !1,
-                                    closeOnClick: !0,
-                                    rtl: !1,
-                                    pauseOnFocusLoss: !0,
-                                    draggable: !0,
-                                    pauseOnHover: !0
-                                }), Object(v.jsx)(Pt.a, {})]
-                            })
-                        }
-                    }]), a
+						key: "render",
+						value: function ()
+						{
+							var e = this.getButtons();
+							return Object(v.jsxs)("div", {
+							  className: "left-toolbar",
+							  children: [
+								// ✅ Logo + Title
+								Object(v.jsxs)("div", {
+								  className: "logo-title",
+								  children: [
+									Object(v.jsx)("img", {
+									  src: "/Sportstech.png", // Update with your actual path
+									  alt: "Logo",
+									  className: "logo"
+									}),
+									Object(v.jsx)("div", {
+									  className: "title",
+									  children: "SPORTSTECH"
+									})
+								  ]
+								}),
+						  
+								// ✅ Toolbar Buttons
+								e.map(function (e, t) {
+								  return e
+									? Object(v.jsx)(
+										"div",
+										{
+										  className: "left-toolbar-button ".concat(e.toggled ? "toggled" : ""),
+										  "data-tip": e.tooltip,
+										  onClick: function () {
+											"function" === typeof e.callback && e.callback();
+										  },
+										  children: Object(v.jsx)("span", {
+											className: e.font,
+											style: e.fontStyle,
+											children: e.label
+										  })
+										},
+										t
+									  )
+									: Object(v.jsx)(
+										"div",
+										{
+										  className: "hr"
+										},
+										t
+									  );
+								}),
+						  
+								// ✅ Toast + Context Tooltips
+								Object(v.jsx)(Ft.a, {
+								  position: "bottom-center",
+								  autoClose: 3000,
+								  hideProgressBar: false,
+								  newestOnTop: false,
+								  closeOnClick: true,
+								  rtl: false,
+								  pauseOnFocusLoss: true,
+								  draggable: true,
+								  pauseOnHover: true
+								}),
+								Object(v.jsx)(Pt.a, {})
+							  ]
+							});
+						  }						  
+					}]), a
                 }(r.a.Component),
                 It = function(e) {
                     Object(x.a)(a, e);
@@ -6069,23 +6103,8 @@
                     category: "BC",
                     styles: [
                       {
-                        name: "BC-MB",
-                        image: "/blueprint3D-assets/models/thumbnails/br-bml.jpg",
-                        model: "/blueprint3D-assets/models/glb/sBike.glb",
-                        type: "1",
-                        morph: [
-                          { label: "Height", index: 0, min: 24, max: 108 },
-                          { label: "Width",  index: 1, min: 24, max: 108 },
-                          { label: "Depth",  index: 2, min: 12, max: 60 }
-                        ],
-                        materials: [
-                          { label: "Top",  name_in_model: "cabinet-top",  types: Nt },
-                          { label: "Body", name_in_model: "cabinet-body", types: Nt }
-                        ]
-                      },
-                      {
                         name: "BC-RCcc",
-                        image: "/blueprint3D-assets/models/thumbnails/br-bml.jpg",
+                        image: "/blueprint3D-assets/models/thumbnails/treadmill.webp",
                         model: "/blueprint3D-assets/models/glb/A0y3.glb",
                         type: "1",
                         stackontop: true,
@@ -6114,43 +6133,158 @@
                           { label: "Top",  name_in_model: "cabinet-top",  types: Nt },
                           { label: "Body", name_in_model: "cabinet-body", types: Nt }
                         ]
-                      }
+                      },
+                      {
+						name: "Table",
+						image: "/blueprint3D-assets/models/thumbnails/table.jpg",
+						model: "/blueprint3D-assets/models/glb/table.glb",
+						type: "1",
+						morph: [
+						{
+							label: "Height",
+							index: 0,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Width",
+							index: 1,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Depth",
+							index: 2,
+							min: 60,
+							max: 60
+						}],
+						materials: [
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						},
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						}]
+					},
                     ]
                   },
-                Ea = {
-                    category: "BIN",
-                    styles: [{
-                        name: "BIN-SB",
-                        image: "/blueprint3D-assets/models/thumbnails/bin.jpg",
-                        model: "/blueprint3D-assets/models/glb/test.glb",
-                        type: "1",
-                        morph: [{
-                            label: "Height",
-                            index: 0,
-                            min: 24,
-                            max: 108
-                        }, {
-                            label: "Width",
-                            index: 1,
-                            min: 24,
-                            max: 108
-                        }, {
-                            label: "Depth",
-                            index: 2,
-                            min: 60,
-                            max: 60
-                        }],
-                        materials: [{
-                            label: "Body",
-                            name_in_model: "T_bin",
-                            types: Nt
-                        }, {
-                            label: "Body",
-                            name_in_model: "T_bin",
-                            types: Nt
-                        }]
-                    }]
-                },
+                  STech = {
+					category: "SPORTSTECH",
+					styles: [
+					{
+						name: "sTread",
+						image: "/blueprint3D-assets/models/thumbnails/sTread.jpg",
+						model: "/blueprint3D-assets/models/glb/sTread.glb",
+						type: "1",
+						morph: [
+						{
+							label: "Height",
+							index: 0,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Width",
+							index: 1,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Depth",
+							index: 2,
+							min: 60,
+							max: 60
+						}],
+						materials: [
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						},
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						}]
+					},
+					{
+						name: "sRow",
+						image: "/blueprint3D-assets/models/thumbnails/sRow.jpg",
+						model: "/blueprint3D-assets/models/glb/sRow.glb",
+						type: "1",
+						morph: [
+						{
+							label: "Height",
+							index: 0,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Width",
+							index: 1,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Depth",
+							index: 2,
+							min: 60,
+							max: 60
+						}],
+						materials: [
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						},
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						}]
+					},
+					{
+						name: "sBike",
+						image: "/blueprint3D-assets/models/thumbnails/sBike.webp",
+						model: "/blueprint3D-assets/models/glb/sBike-3.glb",
+						type: "1",
+						morph: [
+						{
+							label: "Height",
+							index: 0,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Width",
+							index: 1,
+							min: 24,
+							max: 108
+						},
+						{
+							label: "Depth",
+							index: 2,
+							min: 60,
+							max: 60
+						}],
+						materials: [
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						},
+						{
+							label: "Body",
+							name_in_model: "T_bin",
+							types: Nt
+						}]
+					},
+                ]
+				},
                 Ma = ([].concat([{
                     label: "NG",
                     name_in_model: ",desk-top",
@@ -6179,7 +6313,7 @@
                     label: "2SCP",
                     name_in_model: "grommet-2scp",
                     thumbnail: "/blueprint3D-assets/textures/thumb-grommet-cog.jpg"
-                }]), [Ea,Sa]),
+                }]), [STech,Sa]),
                 Wa = (a(56), function(e) {
                     Object(x.a)(a, e);
                     var t = Object(D.a)(a);
