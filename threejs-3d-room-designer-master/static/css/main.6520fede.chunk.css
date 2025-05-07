@@ -118,7 +118,7 @@
 }
 
 .bp3d .container .main-container .controls-section {
-    height: 13%;
+    height: 16%;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -378,7 +378,7 @@
 }
 
 .product-info-container {
-    height: calc(100% - 60px);
+    height: calc(100% - 11%);
     overflow: auto
 }
 
