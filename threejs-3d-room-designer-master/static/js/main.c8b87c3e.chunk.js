@@ -5964,7 +5964,57 @@
                             })
                         }
                     }]), a
-                }(r.a.Component);
+                }
+            //     const modalHTML = `
+            //     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            //       <div class="modal-dialog modal-dialog-centered">
+            //         <div class="modal-content">
+            //           <div class="modal-header">
+            //             <h5 class="modal-title" id="exampleModalLabel">Welcome</h5>
+            //             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            //           </div>
+            //           <div class="modal-body">
+            //             Welcome to our site! Click "Enter" to start using it.
+            //           </div>
+            //           <div class="modal-footer">
+            //             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Enter</button>
+            //           </div>
+            //         </div>
+            //       </div>
+            //     </div>
+            //   `;
+              
+            //   // Add modal + blocker on page load
+            //   window.addEventListener("load", function () {
+            //     // Add modal
+            //     document.body.insertAdjacentHTML("beforeend", modalHTML);
+              
+            //     // Add interaction blocker
+            //     const blocker = document.createElement("div");
+            //     blocker.id = "interaction-blocker";
+            //     blocker.style.cssText = `
+            //       position: fixed;
+            //       top: 0;
+            //       left: 0;
+            //       width: 100vw;
+            //       height: 100vh;
+            //       background: rgba(255,255,255,0.0);
+            //       z-index: 1050;
+            //     `;
+            //     document.body.appendChild(blocker);
+              
+            //     // Show modal
+            //     const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+            //     modal.show();
+              
+            //     // Remove blocker after modal closes
+            //     document.getElementById("exampleModal").addEventListener("hidden.bs.modal", function () {
+            //       document.getElementById("interaction-blocker")?.remove();
+            //     });
+            //   });
+              
+              
+(r.a.Component);
 
             function Ut(e) {
                 var t, a = e.item,
@@ -6178,7 +6228,7 @@
 					{
 						name: "sTread",
 						image: "/blueprint3D-assets/models/thumbnails/sTread.jpg",
-						model: "/blueprint3D-assets/models/glb/sTread.glb",
+						model: "/blueprint3D-assets/models/glb/S tread.glb",
 						type: "1",
 						morph: [
 						{
@@ -6214,7 +6264,7 @@
 					{
 						name: "sRow",
 						image: "/blueprint3D-assets/models/thumbnails/sRow.jpg",
-						model: "/blueprint3D-assets/models/glb/sRow.glb",
+						model: "/blueprint3D-assets/models/glb/S row.glb",
 						type: "1",
 						morph: [
 						{
