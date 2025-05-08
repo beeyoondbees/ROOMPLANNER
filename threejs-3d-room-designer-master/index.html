@@ -300,16 +300,17 @@
       <h3 style="display: inline-block; vertical-align: middle; margin: 0;">Select your room shape</h3>
     </div>  
     <div class="room-options">
-      <div class="room-option"><img src="static/images/room-shapes/empty.svg"><div>No walls</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/squre.svg"><div>Rectangle</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/l-shape.svg"><div>L-Shape</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/z-shape.svg"><div>Z-Shape</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/s-shape.svg"><div>S-Shape</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/t-shape.svg"><div>T-Shape</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/u-shape.svg"><div>U-Shape</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/corner.svg"><div>Corner</div></div>
-      <div class="room-option"><img src="static/images/room-shapes/bluntcorner.svg"><div>Blunt Corner</div></div>
-    </div>
+        <div class="room-option" data-shape="empty"><img src="static/images/room-shapes/empty.svg"><div>No walls</div></div>
+        <div class="room-option" data-shape="rectangle"><img src="static/images/room-shapes/squre.svg"><div>Rectangle</div></div>
+        <div class="room-option" data-shape="l"><img src="static/images/room-shapes/l-shape.svg"><div>L-Shape</div></div>
+        <div class="room-option" data-shape="z"><img src="static/images/room-shapes/z-shape.svg"><div>Z-Shape</div></div>
+        <div class="room-option" data-shape="s"><img src="static/images/room-shapes/s-shape.svg"><div>S-Shape</div></div>
+        <div class="room-option" data-shape="t"><img src="static/images/room-shapes/t-shape.svg"><div>T-Shape</div></div>
+        <div class="room-option" data-shape="u"><img src="static/images/room-shapes/u-shape.svg"><div>U-Shape</div></div>
+        <div class="room-option" data-shape="corner"><img src="static/images/room-shapes/corner.svg"><div>Corner</div></div>
+        <div class="room-option" data-shape="blunt"><img src="static/images/room-shapes/bluntcorner.svg"><div>Blunt Corner</div></div>
+      </div>
+      
     <div class="popup-footer">
       <div>
         <input type="number" placeholder="Wall Height (m)" />
@@ -338,25 +339,29 @@
         popup.style.display = 'block';
         overlay.style.display = 'block';
   
-        let selectedRoom = null;
+        let selectedShape = null;
   
         // Click handler for room options
         roomOptions.forEach(option => {
           option.addEventListener('click', () => {
-            // Deselect all
             roomOptions.forEach(opt => opt.classList.remove('selected-room'));
-            // Select current
             option.classList.add('selected-room');
-            selectedRoom = option;
+            selectedShape = option.getAttribute('data-shape'); // 👈 get "t", "u", etc.
           });
         });
   
-        // Click handler for LET'S GO
+        // LET'S GO logic
         letsGoBtn.addEventListener('click', () => {
+  
           popup.style.display = 'none';
           overlay.style.display = 'none';
-          // ✅ You can now use `selectedRoom` for logic
-          console.log("Selected room shape:", selectedRoom.innerText.trim());
+  
+          console.log("Selected shape:", selectedShape);
+  
+          // Load layout if function is defined
+          if (typeof window.loadShapeFromTemplate === "function") {
+            window.loadShapeFromTemplate(selectedShape);
+          }
         });
   
         // Optional: Click outside to close popup
@@ -371,6 +376,164 @@
         });
       }, 1000);
     });
+  </script>
+  <script>
+    window.loadShapeFromTemplate = function(shape) {
+  const fp = window.FLOORPLAN; // replace with your actual floorplan instance
+  fp.reset();
+
+  // Define all shapes
+  if (shape === "empty") {
+    // No walls
+  }
+
+  else if (shape === "rectangle") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(4, 0);
+    const c3 = fp.newCorner(4, 3);
+    const c4 = fp.newCorner(0, 3);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c1);
+  }
+
+  else if (shape === "l") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(3, 0);
+    const c3 = fp.newCorner(3, 1);
+    const c4 = fp.newCorner(1, 1);
+    const c5 = fp.newCorner(1, 3);
+    const c6 = fp.newCorner(0, 3);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c1);
+  }
+
+  else if (shape === "z") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(3, 0);
+    const c3 = fp.newCorner(3, 1);
+    const c4 = fp.newCorner(1, 1);
+    const c5 = fp.newCorner(1, 2);
+    const c6 = fp.newCorner(3, 2);
+    const c7 = fp.newCorner(3, 3);
+    const c8 = fp.newCorner(0, 3);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c7);
+    fp.newWall(c7, c8);
+    fp.newWall(c8, c1);
+  }
+
+  else if (shape === "s") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(3, 0);
+    const c3 = fp.newCorner(3, 1);
+    const c4 = fp.newCorner(2, 1);
+    const c5 = fp.newCorner(2, 2);
+    const c6 = fp.newCorner(3, 2);
+    const c7 = fp.newCorner(3, 3);
+    const c8 = fp.newCorner(0, 3);
+    const c9 = fp.newCorner(0, 2);
+    const c10 = fp.newCorner(1, 2);
+    const c11 = fp.newCorner(1, 1);
+    const c12 = fp.newCorner(0, 1);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c7);
+    fp.newWall(c7, c8);
+    fp.newWall(c8, c9);
+    fp.newWall(c9, c10);
+    fp.newWall(c10, c11);
+    fp.newWall(c11, c12);
+    fp.newWall(c12, c1);
+  }
+
+  else if (shape === "t") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(2, 0);
+    const c3 = fp.newCorner(2, 1);
+    const c4 = fp.newCorner(3, 1);
+    const c5 = fp.newCorner(3, 3);
+    const c6 = fp.newCorner(-1, 3);
+    const c7 = fp.newCorner(-1, 1);
+    const c8 = fp.newCorner(0, 1);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c7);
+    fp.newWall(c7, c8);
+    fp.newWall(c8, c1);
+  }
+
+  else if (shape === "u") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(3, 0);
+    const c3 = fp.newCorner(3, 2);
+    const c4 = fp.newCorner(2, 2);
+    const c5 = fp.newCorner(2, 1);
+    const c6 = fp.newCorner(1, 1);
+    const c7 = fp.newCorner(1, 2);
+    const c8 = fp.newCorner(0, 2);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c7);
+    fp.newWall(c7, c8);
+    fp.newWall(c8, c1);
+  }
+
+  else if (shape === "corner") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(3, 0);
+    const c3 = fp.newCorner(3, 1);
+    const c4 = fp.newCorner(1, 1);
+    const c5 = fp.newCorner(1, 3);
+    const c6 = fp.newCorner(0, 3);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c1);
+  }
+
+  else if (shape === "blunt") {
+    const c1 = fp.newCorner(0, 0);
+    const c2 = fp.newCorner(3, 0);
+    const c3 = fp.newCorner(3, 2);
+    const c4 = fp.newCorner(2, 2);
+    const c5 = fp.newCorner(2, 3);
+    const c6 = fp.newCorner(1, 3);
+    const c7 = fp.newCorner(1, 2);
+    const c8 = fp.newCorner(0, 2);
+    fp.newWall(c1, c2);
+    fp.newWall(c2, c3);
+    fp.newWall(c3, c4);
+    fp.newWall(c4, c5);
+    fp.newWall(c5, c6);
+    fp.newWall(c6, c7);
+    fp.newWall(c7, c8);
+    fp.newWall(c8, c1);
+  }
+
+  fp.update();
+};
+
   </script>
   
   
