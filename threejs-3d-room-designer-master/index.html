@@ -270,7 +270,21 @@
   background: #d60000;
   transform: scale(1.05);
 }
-
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* dim effect */
+  z-index: 9998; /* below popup, above rest */
+  display: none;
+}
+.room-option.selected-room {
+  border-color: #E4002B;
+  background-color: #fff1f1;
+  box-shadow: 0 0 10px rgba(228, 0, 43, 0.3);
+}
 
     
   </style>
@@ -279,6 +293,7 @@
 <body style="margin:0;height:100vh;overflow:hidden">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root" style="height:100%"></div>
+  <div id="overlay" style="display: none;"></div>
   <div class="room-popup" id="roomPopup">
     <div style="text-align: center; margin-bottom: 10px;">
       <img src="/Sportstech.png" alt="Logo" style="height: 40px; vertical-align: middle; margin-right: 10px;">
@@ -313,12 +328,52 @@
   <!-- Show popup AFTER full page and React load -->
   <script>
     window.addEventListener('load', () => {
-      // Delay a bit to let React render first
       setTimeout(() => {
         const popup = document.getElementById('roomPopup');
-        if (popup) popup.style.display = 'block';
-      }, 1000); // change to 8000 for 8s delay
+        const overlay = document.getElementById('overlay');
+        const roomOptions = document.querySelectorAll('.room-option');
+        const letsGoBtn = popup.querySelector('button');
+  
+        // Show popup and overlay
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+  
+        let selectedRoom = null;
+  
+        // Click handler for room options
+        roomOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            // Deselect all
+            roomOptions.forEach(opt => opt.classList.remove('selected-room'));
+            // Select current
+            option.classList.add('selected-room');
+            selectedRoom = option;
+          });
+        });
+  
+        // Click handler for LET'S GO
+        letsGoBtn.addEventListener('click', () => {
+          popup.style.display = 'none';
+          overlay.style.display = 'none';
+          // ✅ You can now use `selectedRoom` for logic
+          console.log("Selected room shape:", selectedRoom.innerText.trim());
+        });
+  
+        // Optional: Click outside to close popup
+        document.addEventListener('click', function (event) {
+          if (
+            popup.style.display === 'block' &&
+            !popup.contains(event.target)
+          ) {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+          }
+        });
+      }, 1000);
     });
-    </script> 
+  </script>
+  
+  
+  
 </body>
 </html>
