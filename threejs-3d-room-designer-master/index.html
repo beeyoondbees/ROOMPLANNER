@@ -339,7 +339,7 @@
         popup.style.display = 'block';
         overlay.style.display = 'block';
   
-        let selectedShape = null;
+        let selectedShape = "rectangle";
   
         // Click handler for room options
         roomOptions.forEach(option => {
@@ -352,18 +352,15 @@
   
         // LET'S GO logic
         letsGoBtn.addEventListener('click', () => {
-  
           popup.style.display = 'none';
           overlay.style.display = 'none';
-  
-          console.log("Selected shape:", selectedShape);
-  
-          // Load layout if function is defined
+          console.log("Selected shape:", selectedShape || "(none)");
+          
           if (typeof window.loadShapeFromTemplate === "function") {
             window.loadShapeFromTemplate(selectedShape);
           }
         });
-  
+
         // Optional: Click outside to close popup
         document.addEventListener('click', function (event) {
           if (
@@ -381,11 +378,9 @@
     window.loadShapeFromTemplate = function(shape) {
   const fp = window.FLOORPLAN; // replace with your actual floorplan instance
   fp.reset();
-
-  // Define all shapes
   if (shape === "empty") {
-    // No walls
-  }
+  
+}
 
   else if (shape === "rectangle") {
     const c1 = fp.newCorner(0, 0);
@@ -412,25 +407,25 @@
     fp.newWall(c5, c6);
     fp.newWall(c6, c1);
   }
-
   else if (shape === "z") {
-    const c1 = fp.newCorner(0, 0);
-    const c2 = fp.newCorner(3, 0);
-    const c3 = fp.newCorner(3, 1);
-    const c4 = fp.newCorner(1, 1);
-    const c5 = fp.newCorner(1, 2);
-    const c6 = fp.newCorner(3, 2);
-    const c7 = fp.newCorner(3, 3);
-    const c8 = fp.newCorner(0, 3);
-    fp.newWall(c1, c2);
-    fp.newWall(c2, c3);
-    fp.newWall(c3, c4);
-    fp.newWall(c4, c5);
-    fp.newWall(c5, c6);
-    fp.newWall(c6, c7);
-    fp.newWall(c7, c8);
-    fp.newWall(c8, c1);
-  }
+  const c1 = fp.newCorner(0, 0);     // bottom-left
+  const c2 = fp.newCorner(3, 0);     // bottom-right
+  const c3 = fp.newCorner(3, 1);     // right step up
+  const c4 = fp.newCorner(1, 1);     // inside corner bottom
+  const c5 = fp.newCorner(1, 2);     // inside corner top
+  const c6 = fp.newCorner(4, 2);     // top-right step out
+  const c7 = fp.newCorner(4, 3);     // top-right
+  const c8 = fp.newCorner(0, 3);     // top-left
+
+  fp.newWall(c1, c2);
+  fp.newWall(c2, c3);
+  fp.newWall(c3, c4);
+  fp.newWall(c4, c5);
+  fp.newWall(c5, c6);
+  fp.newWall(c6, c7);
+  fp.newWall(c7, c8);
+  fp.newWall(c8, c1);
+}
 
   else if (shape === "s") {
     const c1 = fp.newCorner(0, 0);
@@ -535,8 +530,5 @@
 };
 
   </script>
-  
-  
-  
 </body>
 </html>
