@@ -533,7 +533,7 @@
                 } finally {
                     l.f()
                 }
-                return !1
+                return !1 
             };
             var J = function() {
                 function e() {
@@ -3790,7 +3790,13 @@
                                 l = e.metadata;
                             a.scene.addItem(e.item_type, e.model_url, l, t, e.rotation, e.options)
                         }))
-                    }, this.floorplan = new fe, this.scene = new it(this, t), this.floorplan.scene = this.scene
+                    }, this.floorplan = new fe;
+                    setTimeout(() => {
+                        window.FLOORPLAN = this.floorplan;
+                        console.log("FLOORPLAN set", window.FLOORPLAN);
+                      }, 1000); // Wait until it's fully initialized                      
+                    this.scene = new it(this, t);
+                    this.floorplan.scene = this.scene;
                 };
 
             function ot(e) {
@@ -6632,4 +6638,4 @@
     [
         [57, 1, 2]
     ]
-]);
+]);  
