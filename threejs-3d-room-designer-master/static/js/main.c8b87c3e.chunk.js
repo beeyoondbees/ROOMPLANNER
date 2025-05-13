@@ -3551,194 +3551,190 @@
                                 return "function" === typeof t && t(e)
                             })), e.removed(), this.scene.remove(e), t || ee.Utils.removeValue(this.items, e)
                         }
-                    }, {
+                    },{
                         key: "addItem",
-                        value: function() {
-                            var e = Object(u.a)(y.a.mark((function e(t, a, l, n, i, s) {
-                                var o, m = this,
-                                    d = arguments;
-                                return y.a.wrap((function(e) {
-                                    for (;;) switch (e.prev = e.next) {
-                                        case 0:
-                                            return o = !(d.length > 6 && void 0 !== d[6]) || d[6], console.log("adding item"), e.abrupt("return", new Promise((function(e) {
-                                                t = t || 1;
-                                                var d = m;
-                                                m.itemLoadingCallbacks.forEach((function(e) {
-                                                    return "function" === typeof e && e()
-                                                })), m.GLTFLoader.load(a, (function(a) {
-                                                    console.log(a);
-                                                    var m = [],
-                                                        b = {},
-                                                        r = {},
-                                                        p = {};
-                                                    a.scene.traverse((function(e) {
-                                                        if (e.isMesh)
-                                                            if (e.name.includes("morph-") || m.push(e), e.name.includes("morph-height")) {
-                                                                var t = e.name.replace("-morph-height", ""),
-                                                                    a = [];
-                                                                e.geometry.attributes.uv.array.forEach((function(e) {
-                                                                    return a.push(e)
-                                                                })), b[t] = a
-                                                            } else if (e.name.includes("morph-width")) {
-                                                            var l = e.name.replace("-morph-width", ""),
-                                                                n = [];
-                                                            e.geometry.attributes.uv.array.forEach((function(e) {
-                                                                return n.push(e)
-                                                            })), r[l] = n
-                                                        } else if (e.name.includes("morph-depth")) {
-                                                            var i = e.name.replace("-morph-depth", ""),
-                                                                s = [];
-                                                            e.geometry.attributes.uv.array.forEach((function(e) {
-                                                                return s.push(e)
-                                                            })), p[i] = s
-                                                        }
-                                                    }));
-                                                    var c = [b, r, p],
-                                                        h = new(nt.Factory.getClass(t))(d.model, Object(f.a)(Object(f.a)({}, l), {}, {
-                                                            morphUVs: c
-                                                        }), m, n, i, s);
-                                                    console.log(m, n, i, s), console.log("item line 185", h), h.initObject(m, n, i, s), console.log("item 187", h), d.items.push(h), d.add(h), o && d.itemLoadedCallbacks.forEach((function(e) {
-                                                        return "function" === typeof e && e(h)
-                                                    })), e(h)
-                                                }), void 0, (function() {
-                                                    e(null)
-                                                }))
-                                            })));
-                                        case 3:
-                                        case "end":
-                                            return e.stop()
-                                    }
-                                }), e)
-                            })));
-                            return function(t, a, l, n, i, s) {
-                                return e.apply(this, arguments)
-                            }
-                        }()
-                    }, {
-                        key: "importSetFromBuilder",
-                        value: function() {
-                            var e = Object(u.a)(y.a.mark((function e(t, a, l, n, i) {
-                                var s, o, m, d, b, r;
-                                return y.a.wrap((function(e) {
-                                    for (;;) switch (e.prev = e.next) {
-                                        case 0:
-                                            if (Array.isArray(a) && a.length) {
-                                                e.next = 2;
-                                                break
+                        value: function () {
+                          var e = Object(u.a)(y.a.mark((function e(t, a, l, n, i, s) {
+                            var o, m = this,
+                              d = arguments;
+                      
+                            return y.a.wrap((function (e) {
+                              for (;;) switch (e.prev = e.next) {
+                                case 0:
+                                  return o = !(d.length > 6 && void 0 !== d[6]) || d[6],
+                                    console.log("adding item"),
+                                    e.abrupt("return", new Promise((function (resolve) {
+                                      t = t || 1;
+                                      var d = m;
+                      
+                                      m.itemLoadingCallbacks.forEach(function (e) {
+                                        return "function" === typeof e && e()
+                                      });
+                      
+                                      // ✅ Enable cache and decoder
+                                      THREE.Cache.enabled = true;
+                                      if (window.MeshoptDecoder) {
+                                        m.GLTFLoader.setMeshoptDecoder(MeshoptDecoder);
+                                      }
+                      
+                                      // ✅ Delay loading during idle time
+                                      (window.requestIdleCallback || window.setTimeout)(() => {
+                                        m.GLTFLoader.load(a, function (gltf) {
+                                          console.log("✅ GLB Loaded:", gltf);
+                      
+                                          var m = [], b = {}, r = {}, p = {};
+                      
+                                          gltf.scene.traverse(function (e) {
+                                            if (e.isMesh) {
+                                              e.frustumCulled = false;
+                                              e.castShadow = true;
+                                              e.receiveShadow = true;
+                      
+                                              // Remove unnecessary components
+                                              if (e.isSkinnedMesh) e.skeleton = null;
+                                              if (e.animations) e.animations = [];
+                      
+                                              m.push(e);
+                      
+                                              if (e.name.includes("morph-height")) {
+                                                var t = e.name.replace("-morph-height", ""), a = [];
+                                                e.geometry.attributes.uv.array.forEach(function (e) {
+                                                  return a.push(e)
+                                                });
+                                                b[t] = a;
+                                              } else if (e.name.includes("morph-width")) {
+                                                var l = e.name.replace("-morph-width", ""), n = [];
+                                                e.geometry.attributes.uv.array.forEach(function (e) {
+                                                  return n.push(e)
+                                                });
+                                                r[l] = n;
+                                              } else if (e.name.includes("morph-depth")) {
+                                                var i = e.name.replace("-morph-depth", ""), s = [];
+                                                e.geometry.attributes.uv.array.forEach(function (e) {
+                                                  return s.push(e)
+                                                });
+                                                p[i] = s;
+                                              }
                                             }
-                                            return e.abrupt("return");
-                                        case 2:
-                                            console.log("import set from builder"), 101, (s = this).itemLoadingCallbacks.forEach((function(e) {
-                                                return "function" === typeof e && e()
-                                            })), o = new(nt.Factory.getClass(101))(s.model, Object(f.a)({}, t), [], l, n, i), m = Object(L.a)(a), e.prev = 8, m.s();
-                                        case 10:
-                                            if ((d = m.n()).done) {
-                                                e.next = 18;
-                                                break
-                                            }
-                                            return b = d.value, e.next = 14, s.addItem(b.type || b.item_type, b.model || b.modelUrl || b.model_url, b.metadata, (new ce.Lb).copy(o.position).add(new ce.Lb(b.xpos, b.ypos, b.zpos)), b.rotation, b.options);
-                                        case 14:
-                                            r = e.sent, o.addLinkedItem(r);
-                                        case 16:
-                                            e.next = 10;
-                                            break;
-                                        case 18:
-                                            e.next = 23;
-                                            break;
-                                        case 20:
-                                            e.prev = 20, e.t0 = e.catch(8), m.e(e.t0);
-                                        case 23:
-                                            return e.prev = 23, m.f(), e.finish(23);
-                                        case 26:
-                                            s.items.push(o), s.add(o), o.initObject(), o.calculateHalfSize(), o.dimensionHelper.update(), s.itemLoadedCallbacks.forEach((function(e) {
-                                                return "function" === typeof e && e(o)
-                                            }));
-                                        case 32:
-                                        case "end":
-                                            return e.stop()
-                                    }
-                                }), e, this, [
-                                    [8, 20, 23, 26]
-                                ])
-                            })));
-                            return function(t, a, l, n, i) {
-                                return e.apply(this, arguments)
-                            }
+                                          });
+                      
+                                          if (Object.keys(b).length === 0) b["default_height"] = [0, 24, 0, 24];
+                                          if (Object.keys(r).length === 0) r["default_width"] = [0, 24, 0, 24];
+                                          if (Object.keys(p).length === 0) p["default_depth"] = [0, 12, 0, 12];
+                      
+                                          var c = [b, r, p];
+                      
+                                          var h = new (nt.Factory.getClass(t))(d.model,
+                                            Object(f.a)(Object(f.a)({}, l), {
+                                              morphUVs: c
+                                            }), m, n, i, s);
+                      
+                                          // Optional: animation trigger
+                                          h.playAnimation = function () {
+                                            this.userData.isAnimating = true;
+                                            window._animateTarget = this;
+                                          };
+                      
+                                          h.initObject(m, n, i, s);
+                                          d.items.push(h);
+                                          d.add(h);
+                      
+                                          o && d.itemLoadedCallbacks.forEach(function (e) {
+                                            return "function" === typeof e && e(h)
+                                          });
+                      
+                                          resolve(h);
+                                        }, undefined, function () {
+                                          resolve(null); // onError
+                                        });
+                                      });
+                      
+                                    })));
+                                case 3:
+                                case "end":
+                                  return e.stop();
+                              }
+                            }), e);
+                          })));
+                      
+                          return function (t, a, l, n, i, s) {
+                            return e.apply(this, arguments);
+                          }
                         }()
-                    }, {
+                      },{
                         key: "addSet",
                         value: function() {
-                            var e = Object(u.a)(y.a.mark((function e(t, a, l, n, i) {
-                                var s, o, m, d, b, r, p, c, h, u, _, g, x, D, v, k, T;
-                                return y.a.wrap((function(e) {
-                                    for (;;) switch (e.prev = e.next) {
-                                        case 0:
-                                            console.log("add set to scene", t, a), 101, (s = this).itemLoadingCallbacks.forEach((function(e) {
-                                                return "function" === typeof e && e()
-                                            })), o = new(nt.Factory.getClass(101))(s.model, Object(f.a)({}, t), [], l, n, i), m = Object(L.a)(a), e.prev = 6, m.s();
-                                        case 8:
-                                            if ((d = m.n()).done) {
-                                                e.next = 23;
-                                                break
-                                            }
-                                            if (b = d.value, r = b.product, p = new ce.Lb(b.offset.x, b.offset.y, b.offset.z), c = {}, Array.isArray(r.morph)) {
-                                                h = Object(L.a)(r.morph);
-                                                try {
-                                                    for (h.s(); !(u = h.n()).done;) _ = u.value, c[_.index] = (_.min - 5) / 295
-                                                } catch (y) {
-                                                    h.e(y)
-                                                } finally {
-                                                    h.f()
-                                                }
-                                            }
-                                            if (g = {}, Array.isArray(r.styles)) {
-                                                x = Object(L.a)(r.styles);
-                                                try {
-                                                    for (x.s(); !(D = x.n()).done;) v = D.value, g[v.name_in_model] = v.types[0].name_in_model
-                                                } catch (y) {
-                                                    x.e(y)
-                                                } finally {
-                                                    x.f()
-                                                }
-                                            }
-                                            return k = Object(f.a)(Object(f.a)({}, r), {}, {
-                                                itemName: r.name,
-                                                modelUrl: r.model,
-                                                itemType: r.type
-                                            }), e.next = 19, s.addItem(r.type, r.model, k, (new ce.Lb).copy(o.position).add(p), null, {
-                                                styles: g,
-                                                morph: c,
-                                                stackable: r.stackable,
-                                                stackontop: r.stackontop,
-                                                overlappable: r.overlappable
-                                            });
-                                        case 19:
-                                            T = e.sent, o.addLinkedItem(T);
-                                        case 21:
-                                            e.next = 8;
-                                            break;
-                                        case 23:
-                                            e.next = 28;
-                                            break;
-                                        case 25:
-                                            e.prev = 25, e.t0 = e.catch(6), m.e(e.t0);
-                                        case 28:
-                                            return e.prev = 28, m.f(), e.finish(28);
-                                        case 31:
-                                            s.items.push(o), s.add(o), o.initObject(), o.calculateHalfSize(), o.dimensionHelper.update(), console.log(o), s.itemLoadedCallbacks.forEach((function(e) {
-                                                return "function" === typeof e && e(o)
-                                            }));
-                                        case 38:
-                                        case "end":
-                                            return e.stop()
+                          var e = Object(u.a)(y.a.mark((function e(t, a, l, n, i) {
+                            var s, o, m, d, b, r, p, c, h, u, _, g, x, D, v, k, T;
+                            return y.a.wrap((function(e) {
+                              for (;;) switch (e.prev = e.next) {
+                                case 0:
+                                  console.log("add set to scene", t, a), 101, (s = this).itemLoadingCallbacks.forEach((function(e) {
+                                    return "function" === typeof e && e();
+                                  })), o = new (nt.Factory.getClass(101))(s.model, Object(f.a)({}, t), [], l, n, i), m = Object(L.a)(a), e.prev = 6, m.s();
+                                case 8:
+                                  if ((d = m.n()).done) {
+                                    e.next = 23;
+                                    break;
+                                  }
+                                  if (b = d.value, r = b.product, p = new ce.Lb(b.offset.x, b.offset.y, b.offset.z), c = {}, Array.isArray(r.morph)) {
+                                    h = Object(L.a)(r.morph);
+                                    try {
+                                      for (h.s(); !(u = h.n()).done;) _ = u.value, c[_.index] = (_.min - 5) / 295;
+                                    } catch (y) {
+                                      h.e(y);
+                                    } finally {
+                                      h.f();
                                     }
-                                }), e, this, [
-                                    [6, 25, 28, 31]
-                                ])
-                            })));
-                            return function(t, a, l, n, i) {
-                                return e.apply(this, arguments)
-                            }
+                                  }
+                                  if (g = {}, Array.isArray(r.styles)) {
+                                    x = Object(L.a)(r.styles);
+                                    try {
+                                      for (x.s(); !(D = x.n()).done;) v = D.value, g[v.name_in_model] = v.types[0].name_in_model;
+                                    } catch (y) {
+                                      x.e(y);
+                                    } finally {
+                                      x.f();
+                                    }
+                                  }
+                                  return k = Object(f.a)(Object(f.a)({}, r), {}, {
+                                    itemName: r.name,
+                                    modelUrl: r.model,
+                                    itemType: r.type
+                                  }), e.next = 19, s.addItem(r.type, r.model, k, (new ce.Lb).copy(o.position).add(p), null, {
+                                    styles: g,
+                                    morph: c,
+                                    stackable: r.stackable,
+                                    stackontop: r.stackontop,
+                                    overlappable: r.overlappable
+                                  });
+                                case 19:
+                                  T = e.sent, o.addLinkedItem(T);
+                                case 21:
+                                  e.next = 8;
+                                  break;
+                                case 23:
+                                  e.next = 28;
+                                  break;
+                                case 25:
+                                  e.prev = 25, e.t0 = e.catch(6), m.e(e.t0);
+                                case 28:
+                                  return e.prev = 28, m.f(), e.finish(28);
+                                case 31:
+                                  s.items.push(o), s.add(o), o.initObject(), o.calculateHalfSize(), o.dimensionHelper.update(), console.log(o), s.itemLoadedCallbacks.forEach((function(e) {
+                                    return "function" === typeof e && e(o);
+                                  }));
+                                case 38:
+                                case "end":
+                                  return e.stop();
+                              }
+                            }), e, this, [
+                              [6, 25, 28, 31]
+                            ]);
+                          })));
+                          return function(t, a, l, n, i) {
+                            return e.apply(this, arguments);
+                          };
                         }()
                     }]), e
                 }(),
@@ -4246,8 +4242,53 @@
                     }
 
                     function O() {
-                        null != d ? null != b ? b !== d && (b.mouseOff(), (b = d).mouseOver(), s.needsUpdate = !0) : ((b = d).mouseOver(), e.setCursorStyle("pointer"), s.needsUpdate = !0) : null != b && (b.mouseOff(), e.setCursorStyle("auto"), b = null, s.needsUpdate = !0)
+                        if (d != null) {
+                            if (b != null) {
+                                if (b !== d) {
+                                    b.mouseOff();
+                                    b = d;
+                                    b.mouseOver();
+                                    s.needsUpdate = !0;
+                                }
+                            } else {
+                                b = d;
+                                b.mouseOver();
+                                e.setCursorStyle("pointer");
+                                s.needsUpdate = !0;
+                            }
+                    
+                            // ✅ Show hover button near object
+                            const button = document.getElementById("product-hover-button");
+                            if (button) {
+                                const vector = d.position.clone();
+                                if (s.camera && s.camera.matrixWorldInverse) {
+                                    vector.project(s.camera);
+                                }
+                    
+                                const x = (vector.x * 0.5 + 0.5) * window.innerWidth;
+                                const y = (-vector.y * 0.5 + 0.5) * window.innerHeight;
+                    
+                                button.style.left = `${x}px`;
+                                button.style.top = `${y}px`;
+                                button.style.display = "block";
+                                button.style.opacity = "1";
+                            }
+                    
+                        } else if (b != null) {
+                            b.mouseOff();
+                            e.setCursorStyle("auto");
+                            b = null;
+                            s.needsUpdate = !0;
+                    
+                            // ✅ Hide button when not hovering
+                            const button = document.getElementById("product-hover-button");
+                            if (button) {
+                                button.style.display = "none";
+                                button.style.opacity = "0";
+                            }
+                        }
                     }
+                    
                     this.needsUpdate = !0, this.isRotating = function() {
                             return f === x || f === D
                         }, this.selectedObject = function() {
@@ -4714,8 +4755,15 @@
                     this.heightMargin = 0, this.widthMargin = 0, this.elementHeight = 0, this.elementWidth = 0, this.itemSelectedCallbacks = [], this.itemUnselectedCallbacks = [], this.wallClicked = [], this.floorClicked = [], this.nothingClicked = [], this.outlineManager = null;
 
                     function g() {
-                        requestAnimationFrame(g), r.render(), Date.now()
+                        requestAnimationFrame(g);
+                    
+                        if (window._animateTarget && window._animateTarget.userData.isAnimating) {
+                            window._animateTarget.rotation.y += 0.01;
+                        }
+                    
+                        r.render();
                     }
+                    
                     this.dataUrl = function() {
                             return b.domElement.toDataURL("image/png")
                         }, this.stopSpin = function() {
@@ -5536,58 +5584,82 @@
 
                     function a(e) {
                         var l;
-                        return Object(_.a)(this, a), (l = t.call(this, e)).getButtons = function() {
+                        return Object(_.a)(this, a), (l = t.call(this, e)).getButtons = function () {
                             var e = l.props.info,
-                                t = [{
-                                    font: Et[e && e.morphAlign ? e.morphAlign : 0].font,
-                                    tooltip: "Stretch Direction",
-                                    fontStyle: {
-                                        transform: "rotate(".concat(Et[e && e.morphAlign ? e.morphAlign : 0].rotation, "deg)")
+                                t = [
+                                    {
+                                        font: Et[e && e.morphAlign ? e.morphAlign : 0].font,
+                                        tooltip: "Stretch Direction",
+                                        fontStyle: {
+                                            transform: "rotate(" + Et[e && e.morphAlign ? e.morphAlign : 0].rotation + "deg)"
+                                        },
+                                        callback: function () {
+                                            if (e) {
+                                                var t;
+                                                t = (e.morphAlign - 0 + 1) % Et.length, l.props.onMorphAlignChanged(t)
+                                            } else Ft.b.error("Product not selected")
+                                        }
                                     },
-                                    callback: function() {
-                                        if (e) {
-                                            var t;
-                                            t = (e.morphAlign - 0 + 1) % Et.length, l.props.onMorphAlignChanged(t)
-                                        } else Ft.b.error("Product not selected")
+                                    {
+                                        toggled: e && e.fixed,
+                                        font: "fas fa-thumbtack",
+                                        tooltip: "Lock in place",
+                                        callback: function () {
+                                            e ? l.props.onLockChanged(!Boolean(e && e.fixed)) : Ft.b.error("Product not selected")
+                                        }
+                                    },
+                                    {
+                                        toggled: e && e.stackable,
+                                        font: "fas fa-layer-group",
+                                        tooltip: "Stackable",
+                                        callback: function () {
+                                            e ? l.props.onStackableChanged(!Boolean(e && e.stackable)) : Ft.b.error("Product not selected")
+                                        }
+                                    },
+                                    {
+                                        toggled: e && e.overlappable,
+                                        font: "fas fa-clone",
+                                        tooltip: "Overlappable",
+                                        callback: function () {
+                                            e ? l.props.onOverlappableChanged(!Boolean(e && e.overlappable)) : Ft.b.error("Product not selected")
+                                        }
                                     }
-                                }, {
-                                    toggled: e && e.fixed,
-                                    font: "fas fa-thumbtack",
-                                    tooltip: "Lock in place",
-                                    callback: function() {
-                                        e ? l.props.onLockChanged(!Boolean(e && e.fixed)) : Ft.b.error("Product not selected")
-                                    }
-                                }, {
-                                    toggled: e && e.stackable,
-                                    font: "fas fa-layer-group",
-                                    tooltip: "Stackable",
-                                    callback: function() {
-                                        e ? l.props.onStackableChanged(!Boolean(e && e.stackable)) : Ft.b.error("Product not selected")
-                                    }
-                                }, {
-                                    toggled: e && e.overlappable,
-                                    font: "fas fa-clone",
-                                    tooltip: "Overlappable",
-                                    callback: function() {
-                                        e ? l.props.onOverlappableChanged(!Boolean(e && e.overlappable)) : Ft.b.error("Product not selected")
-                                    }
-                                }];
-                            return e && e.flippable && t.push({
+                                ];
+                            e && e.flippable && t.push({
                                 font: "fas fa-exchange-alt",
                                 tooltip: "Flip",
-                                callback: function() {
+                                callback: function () {
                                     e ? l.props.onFlipHorizonal() : Ft.b.error("Product not selected")
                                 }
-                            }), t = [].concat(Object(he.a)(t), [null, {
+                            });
+                    
+                            // ✅ NEW ANIMATE BUTTON HERE
+                            t.push({
+                                font: "fas fa-play-circle",
+                                tooltip: "Animate",
+                                callback: function () {
+                                    if (e) {
+                                        console.log("🎬 Animate clicked:", e);
+                                        if (typeof e.playAnimation === "function") {
+                                            e.playAnimation();
+                                        } else {
+                                            alert("Animate: " + (e.name || "object"));
+                                        }
+                                    } else Ft.b.error("Product not selected")
+                                }
+                            });
+                    
+                            // ➕ Duplicate / 🗑 Delete
+                            return t = [].concat(Object(he.a)(t), [null, {
                                 font: "far fa-copy",
                                 tooltip: "Duplicate",
-                                callback: function() {
+                                callback: function () {
                                     e ? l.props.onDuplicateProduct() : Ft.b.error("Product not selected")
                                 }
                             }, {
                                 font: "far fa-trash-alt",
                                 tooltip: "Delete",
-                                callback: function() {
+                                callback: function () {
                                     e ? l.props.onDeleteActiveProduct() : Ft.b.error("Product not selected")
                                 }
                             }])
@@ -5598,7 +5670,7 @@
                             snap: !0,
                             xRay: !1
                         }, l
-                    }
+                    }                    
                     return Object(g.a)(a, [{
                         key: "render",
                         value: function() {
@@ -5971,53 +6043,6 @@
                         }
                     }]), a
                 }
-            //     const modalHTML = `
-            //     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            //       <div class="modal-dialog modal-dialog-centered">
-            //         <div class="modal-content">
-            //           <div class="modal-header">
-            //             <h5 class="modal-title" id="exampleModalLabel">Welcome</h5>
-            //             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            //           </div>
-            //           <div class="modal-body">
-            //             Welcome to our site! Click "Enter" to start using it.
-            //           </div>
-            //           <div class="modal-footer">
-            //             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Enter</button>
-            //           </div>
-            //         </div>
-            //       </div>
-            //     </div>
-            //   `;
-              
-            //   // Add modal + blocker on page load
-            //   window.addEventListener("load", function () {
-            //     // Add modal
-            //     document.body.insertAdjacentHTML("beforeend", modalHTML);
-              
-            //     // Add interaction blocker
-            //     const blocker = document.createElement("div");
-            //     blocker.id = "interaction-blocker";
-            //     blocker.style.cssText = `
-            //       position: fixed;
-            //       top: 0;
-            //       left: 0;
-            //       width: 100vw;
-            //       height: 100vh;
-            //       background: rgba(255,255,255,0.0);
-            //       z-index: 1050;
-            //     `;
-            //     document.body.appendChild(blocker);
-              
-            //     // Show modal
-            //     const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
-            //     modal.show();
-              
-            //     // Remove blocker after modal closes
-            //     document.getElementById("exampleModal").addEventListener("hidden.bs.modal", function () {
-            //       document.getElementById("interaction-blocker")?.remove();
-            //     });
-            //   });
               
               
 (r.a.Component);
